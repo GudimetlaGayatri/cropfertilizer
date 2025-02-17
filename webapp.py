@@ -2,9 +2,18 @@ import streamlit as st
 import numpy as np
 import pickle
 import requests
+import os
 
 # Load the trained model
-loaded_model = pickle.load(open('crop_recomendation_model.pkl', 'rb'))
+# loaded_model = pickle.load(open('crop_recomendation_model.pkl', 'rb'))
+model_path = os.path.join(os.path.dirname(__file__), 'crop_recommendation_model.pkl')
+
+# Check if the model file exists
+if os.path.exists(model_path):
+    with open(model_path, 'rb') as file:
+        loaded_model = pickle.load(file)
+else:
+    raise FileNotFoundError(f"Error: Model file not found at {model_path}")
 
 # Fertilizer recommendations for each crop
 fertilizer_dict = {
